@@ -1,0 +1,7 @@
+<!-- meu_app/templates/meu_app/login.html -->
+
+<form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Entrar</button>
+</form>

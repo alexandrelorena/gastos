@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+<h1>Deletar Despesa</h1>
+<form method="post">
+    {% csrf_token %}
+    <p>Tem certeza que deseja deletar o produto "{{ object }}"?</p>
+    {% buttons %}
+    <button type="submit" name="action" value="delete" class="btn btn-danger">Confirmar</button>
+    <button type="submit" name="action" value="cancel" class="btn btn-warning">Cancelar</button>
+    {% endbuttons %}
+</form>
+{% if action == 'cancel' %}
+    <script>window.location.href = "{% url 'index' %}";</script>
+{% endif %}
+{% endblock %}

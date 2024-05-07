@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmar Exclusão</title>
+</head>
+<body>
+    <h2>Tem certeza que deseja excluir a despesa "{{ despesa.nome }}"?</h2>
+    <form method="post" action="{% url 'deletar_despesa' despesa.pk %}">
+        {% csrf_token %}
+        <input type="submit" value="Sim, Excluir">
+        <a href="{% url 'index' %}">Cancelar</a>
+    </form>
+
+    <script>
+        function confirmarExclusao() {
+            var confirma = confirm("Tem certeza que deseja excluir?");
+            if (confirma) {
+                document.forms[0].submit();
+            }
+        }
+
+        // Chamar a função quando a página carregar
+        window.onload = confirmarExclusao;
+    </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!--<script>-->
+<!--const hoje = moment().format('DD/MM/YYYY');-->
+<!--console.log(hoje);-->
+<!--</script>-->
+
+<script>
+  function getAnoAtual(anoatual) {
+    const data = new Date();
+    return data.getFullYear();
+  }
+
+  const anoAtual = getAnoAtual();
+  document.getElementById('ano-atual').textContent = anoAtual;
+</script>
+
+<!--<script>-->
+<!--function getDataAtual() {-->
+<!--  const data = new Date();-->
+<!--  const dia = data.getDate().padStart(2, '0'); // Formata o dia com dois dígitos (ex: 01)-->
+<!--  const mes = (data.getMonth() + 1).padStart(2, '0'); // Corrige o mês (começa em 0) e formata com dois dígitos (ex: 01)-->
+<!--  const ano = data.getFullYear();-->
+<!--  return `${dia}/${mes}/${ano}`;-->
+<!--}-->
+
+<!--const dataAtual = getDataAtual();-->
+<!--document.getElementById('data-atual').textContent = dataAtual;-->
+
+<!--</script>-->
+
+<!-- DATA VENCIMENTO -->
+<script>
+const hoje = moment().format('DD/MM/YYYY'); // Retorna a data atual no formato dd/mm/aaaa
+
+  $(document).ready(function() {
+    $('#data-vencimento').datepicker().on('changeDate', function(e) {
+      const dataVencimento = new Date(e.date);
+      const dataAtual = new Date();
+
+      if (dataVencimento < dataAtual) {
+        // A data de vencimento é anterior à data atual
+        // Exibir mensagem de alerta ou realizar outras ações
+        alert('A data de vencimento está vencida!');
+      }
+    });
+  });
+</script>

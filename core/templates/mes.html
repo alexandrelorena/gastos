@@ -1,0 +1,171 @@
+{% load static %}
+
+
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<!-- Bootstrap CSS -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
+<div class="my-3 my-0">
+    <div class="row">
+        <div class="col-md-12 mx-auto">
+            {% if despesas_do_mes %}
+            <div class="nav flex-column my-0 text-left pills ps" id="mesButtons" role="tablist" aria-orientation="vertical" style="max-height: 512px; overflow-y: auto;">
+
+            <table class="table table-striped table-hover border mx-auto">
+                    <thead class="thead-light">
+                    <tr>
+                        <td colspan="5" class=" custom-text mx-auto">
+                            {% if despesas_do_mes %}
+                            <p class="ml-auto my-0" id="totalDespesas">Total das despesas do mês: R$ {{ total_despesas }}</p>
+                            {% else %}
+                            <span class="text-xl ml-auto">Sem despesas neste mês.</span>
+                            {% endif %}
+                        </td>
+                        <td colspan="2" class="text-center ml-5">
+                            <select id="statusFilter" class="btn btn-sm btn-light dropdown-toggle dropdown-toggle-split text-left" onchange="applyStatusFilter(this.value)">
+                                <option value="">Filtrar</option>
+                                <option value="paga" style="color: green;">Paga</option>
+                                <option value="atrasada" style="color: red;">Atraso</option>
+                                <option value="a_vencer" style="color: blue;">Em dia</option>
+                            </select>
+                        </td>
+                    </tr>
+
+                    <tr class="mx-left text-center {% if isDarkMode %}dark-mode{% endif %}">
+                        <th scope="col" class="border">#</th>
+                        <th scope="col" class="border" >Despesa</th>
+                        <th scope="col" class="border">Valor</th>
+                        <th scope="col" class="border">Vencimento</th>
+                        <th scope="col" class="border">Status</th>
+                        <th colspan="2" scope="col" class="border">Ações</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for despesa in despesas_do_mes %}
+                    <tr class=" despesa-row" data-status="{% if despesa.paga %}paga{% elif despesa.vencimento < hoje %}atrasada{% else %}a_vencer{% endif %}">
+                        <th scope="row" style="width: 10px; color:
+                        {% if despesa.vencimento > hoje and not despesa.paga %}#6C757D
+                        {% elif despesa.vencimento > hoje and despesa.paga %}#17A2B8
+                        {% elif despesa.vencimento < hoje and not despesa.paga %}#DC3545
+                        {% elif despesa.vencimento < hoje and despesa.paga %}#17A2B8
+                        {% elif despesa.vencimento == hoje and despesa.paga %}#17A2B8
+                        {% elif despesa.vencimento == hoje and not despesa.paga %}#FFC107
+                        {% else %}#17A2B8{% endif %};">
+                            {{ forloop.counter|stringformat:"02d" }} </th>
+
+                            <!---------------------------------------------- ⇓ CASO 1: À VENCER ⇓ -------------------------------------------------->
+
+                            {% if despesa.vencimento > hoje and not despesa.paga %}
+                        <td class="display-6 text-secondary"><span style="width: 200px; min-width: 200px;  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ despesa.nome }}</span></td>
+                        <td class="display-6 text-secondary align-right text-right"><span>{{ despesa.valor|floatformat:2|default:"0.00"|ljust:"6" }}</span></td>
+                        <td class="display-6 text-secondary text-center"><span>{{ despesa.vencimento|date:"d/m" }}</span></td>
+
+                        <td class="material-icons-small text-center text-secondary"><button data-despesa-id="{{ despesa.id }}" data-mes="{{ mes }}" onclick="pagar('{{ despesa.id }}')">
+                            ＄</button>
+                        </td>
+                        <td class="material-icons-small text-center text-primary"><a href="{% url 'editar_despesa' pk=despesa.id %}">↻</a></td>
+                        <td class="material-icons-small text-center text-danger">
+                                <button type="button" onclick="abrirModalExcluir({{ despesa.id }},  '{{ despesa.nome }}',  {{  despesa.valor }})" data-despesa-id="{{ despesa.id }}">x</button>
+                        </td>
+
+                        {% elif despesa.paga %}
+                        <td class="text-info"><span style=" width: 200px; min-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ despesa.nome }}</span></td>
+                        <td class="text-info align-right text-right"><span>{{ despesa.valor|floatformat:2|default:"0.00"|ljust:"6" }}</span></td>
+                        <td class="text-info text-center"><span>{{ despesa.vencimento|date:"d/m" }}</span></td>
+                        <td class="material-icons-small text-center text-success">✔</td>
+                        <td class="material-icons-small text-center text-secondary">⁻</td>
+                        <td class="material-icons-small text-center text-danger">
+                                <button type="button" onclick="abrirModalExcluir({{ despesa.id }},  '{{ despesa.nome }}',  {{  despesa.valor }})" data-despesa-id="{{ despesa.id }}">x</button>
+                        </td>
+
+                        <!--------------------------------------- ⇓ CASO 2: VENCE HOJE E NÃO PAGO ⇓ ------------------------------------------->
+
+                        {% elif despesa.vencimento == hoje %}
+                        <td class="text-warning"><span style="width: 200px; min-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ despesa.nome }}</span></td>
+                        <td class="text-warning align-right text-right"><span>{{ despesa.valor|floatformat:2|default:"0.00"|ljust:"6" }}</span></td>
+                        <td class="text-warning text-center"><span>{{ despesa.vencimento|date:"d/m" }}</span></td>
+                        <td class="material-icons-small text-center text-warning">
+                            {% if not despesa.paga %}
+                            <button data-despesa-id="{{ despesa.id }}" data-mes="{{ mes }}" onclick="pagar('{{ despesa.id }}')">＄</button>
+                            {% else %}
+                            <span class="material-icons-small text-center text-success">✔</span>
+                            {% endif %}
+                        </td>
+                        <td class="material-icons-small text-center text-primary"><a href="{% url 'editar_despesa' pk=despesa.id%}">↻</a></td>
+                        <td class="material-icons-small text-center text-danger">
+                                <button type="button" onclick="abrirModalExcluir({{ despesa.id }},  '{{ despesa.nome }}',  {{  despesa.valor }})" data-despesa-id="{{ despesa.id }}">x</button>
+                        </td>
+
+                        <!---------------------------------------------- ⇓ CASO 3: VENCIDO ⇓ -------------------------------------------------->
+
+                        {% elif despesa.vencimento < hoje and not despesa.paga %}
+                        <td class="text-danger"><span style="width: 200px; min-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ despesa.nome }}</span></td>
+                        <td class="text-danger align-right text-right"><span>{{ despesa.valor|floatformat:2|default:"0.00"|ljust:"6" }}</span></td>
+                        <td class="align-center text-danger text-center"><span>{{ despesa.vencimento|date:"d/m" }}</span></td>
+                        <td class="material-icons-small text-center text-danger">
+                            <button data-toggle="tooltip" data-placement="top" title="PAGAR DESPESA VENCIDA!" data-despesa-id="{{ despesa.id }}" data-mes="{{ mes }}" onclick="pagar('{{ despesa.id }}')">
+                                !
+                            </button>
+                        <td colspan="2" class="material-icons-small text-center text-danger">☹</td>
+
+                        <!-------------------------------------------- ⇓ CASO 4: VENCIDO E PAGO ⇓ --------------------------------------------->
+
+                        {% else %}
+                        <td class="align-center text-info"><span style="width: 200px; min-width : 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ despesa.nome }}</span></td>
+                        <td class="text-info align-right text-right"><span>{{ despesa.valor|floatformat:2|default:"0.00"|ljust:"6" }}</span></td>
+                        <td class="align-center text-info text-center"><span>{{ despesa.vencimento|date:"d/m" }}</span></td>
+                        <td class="align-center text-info text-center">✔</td>
+                        <td class="material-icons-small text-center text-primary"><a href="{% url 'editar_despesa' pk=despesa.id%}">↻</a></td>
+                        <td class="material-icons-small text-center text-danger">
+                                <button type="button" onclick="abrirModalExcluir({{ despesa.id }},  '{{ despesa.nome }}',  {{ despesa.valor|floatformat:2 }})" data-despesa-id="{{ despesa.id }}">x</button>
+                        </td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="col-md-12 alert alert-info mx-auto text-center">
+                Nenhuma despesa encontrada para o mês selecionado!!
+            </div>
+            {% endif %}
+            <div id="mensagemDespesas"></div>
+        </div>
+    </div>
+</div>
+
+<div id="totalDespesasDiv" style="display: none;">
+    O total de despesas selecionadas é: <span id="totalSelect">0.00</span>
+</div>
+
+    <!-- Modal de exclusão -->
+<div class="modal" id="modalDelete">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content align-items-center">
+            <div class="modal-header">
+                <h5 class="modal-title" style="color: #6C757D">Excluir a despesa:</h5>
+            </div>
+            <div class="modal-body text-center">
+                <p id="modalMessage" style="color: #17A2B8"></p> <!-- Elemento para exibir mensagens -->
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-warning" data-dismiss="modal" onclick="cancelarExclusao()">Cancelar</button>
+                <button type="button" class="btn btn-danger" onclick="excluirDespesa(despesaId)">Excluir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/static/javascript/gastos.js"></script>
+
+
+

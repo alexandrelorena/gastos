@@ -1,0 +1,232 @@
+/* style.css */
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+}
+
+.custom-text {
+        color: #6C757D; /* Altere para a cor desejada */
+        font-size: 16px; /* Altere para o tamanho de fonte desejado */
+        /* Adicione outras propriedades de estilo conforme necessário */
+    }
+
+/* ------------------------ tabela ------------------------ */
+
+/* linhas pares */
+.table-striped-custom tbody tr:nth-of-type(even) {
+    background-color: #FFFFFF;
+}
+
+/* linhas ímpares */
+.table-striped-custom tbody tr:nth-of-type(odd) {
+    background-color: #F8F9FA;
+}
+
+.custom-table th {
+    text-align: center;
+    position: sticky;
+    top: 0;
+    background-color: #F8F9FA; /* ou a cor desejada */
+}
+
+/* ------------------------ toggle-mode ------------------------ */
+
+/* ícone do sol (amarelo) */
+#lightIcon {
+    background-color: transparent;
+    color: #ffae00;
+    vertical-align: middle;
+    margin-top: 0.1rem;
+    margin-left: 0.3rem;
+}
+
+/* ícone da lua (preto) */
+#darkIcon {
+    background-color: transparent;
+    color: white;
+    vertical-align: middle;
+    margin-top: 0.1rem;
+    margin-left: 0.3rem;
+}
+
+/* --------- Estilos para navegadores diferentes --------- */
+
+/* Estilos específicos para o Chrome */
+.browser-chrome .d-flex .text-xl {
+    margin-left: 3rem; /* ou ml-2 */
+    margin-top: 0.3rem;
+}
+
+/* Estilos específicos para o Firefox */
+.browser-firefox .d-flex .text-xl {
+    margin-left: 3rem; /* ou ml-2 */
+    margin-top: 0.1rem;
+}
+
+/* Estilos específicos para o Opera */
+.browser-opera .d-flex .text-xl {
+    margin-left: 5rem;  /* ou ml-2 */
+}
+
+/* Estilos específicos para o Edge */
+.browser-edge .d-flex .text-xl {
+    margin-left: 2rem; /* ou ml-2 */
+    margin-top: 0.5rem;
+}
+
+/* -------------------- menu ------------------------ */
+
+/* Força o fundo transparente */
+.custom-link {
+    background-color: transparent !important;
+}
+
+/* Modo claro */
+.light-mode .nav-link {
+    color: #757C7D;  /* Cor do link no modo claro */
+    border-color: #DEE2E6;
+    background-color: #e00c0c;
+
+}
+
+.active-light {
+    color: blue !important;  /* Defina a cor desejada para o modo claro quando ativo */
+}
+
+.light-mode .nav-link a:hover {
+    color: #007BFF;
+
+}
+
+/* Modo escuro */
+.dark-mode .nav-link {
+    color: #FFFFFF;  /* Cor do link no modo escuro */
+    border-color: #DEE2E6;
+}
+
+.active-dark {
+    color: #00FF00;  /* Cor do texto no modo escuro quando ativo */
+}
+
+
+/* Adicione uma cor para os links visitados em ambos os modos */
+/*#mesButtons a:visited {*/
+/*    color: #40ff00;*/
+/*}*/
+
+        /* Formatação do menu */
+#mesButtons active {
+    color: red;
+    text-decoration: none;
+    border-color: #D1DBE3
+
+}
+
+#mesButtons a:hover {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+#mesButtons li {
+    background-color: danger;
+
+}
+
+#mesButtons li:hover {
+    background-color: #F8F9FA;
+}
+
+/* -------------------- light-mode ------------------------ */
+
+body.light-mode {
+    background-color: #fff; /* Cor de fundo para o modo claro */
+    color: #343A40; /* Cor do texto para o modo claro */
+}
+
+/* Estilo para o link do mês atual no modo claro */
+.light-mode .current-month .nav-link {
+    color: #9f12ce;
+    background-color: transparent;
+}
+
+/* Estilo para os links dos outros meses no modo claro */
+.light-mode .month-item:not(.current-month) .nav-link {
+    color: #808080;
+    background-color: transparent;
+}
+
+/* -------------------- dark-mode ------------------------ */
+
+body.dark-mode {
+    background-color: #212529; /* Cor de fundo para o modo escuro */
+    color: #fff; /* Cor do texto para o modo escuro */
+    border-color: gray;
+}
+
+/* Estilo para o link do mês atual no modo escuro */
+.active-dark {
+    color: #9f12ce;
+    background-color: transparent;
+}
+
+/* Estilo para os links dos outros meses no modo escuro */
+.dark-mode .month-item:not(.current-month) .nav-link {
+    color: #fff;
+    background-color: transparent;
+}
+
+/* select */
+
+.form-select {
+    background-color: transparent;
+}
+
+.dark-mode.form-select {
+    background-color: #fff;
+}
+
+.dark-mode select {
+    background-color: #212529;
+    color: white;
+    border: none;
+}
+
+.light-mode select {
+    background-color: white;
+    color: #212529;
+
+}
+
+/* -------------------- others ------------------------ */
+
+.custom-width {
+    max-width: 10px; /* Largura máxima desejada */
+    margin: 0 auto; /* Centraliza o container na página */
+}
+
+body {
+    overflow-x: hidden;
+}
+
+.custom-container {
+    max-width: 1200px; /* Largura máxima desejada */
+    margin: 0 auto; /* Centraliza o container na página */
+}
+
+button {
+    border: none;
+}
+
+.footer-with-scroll {
+    background-color: white;
+}
+
+.dark-mode #footer-text {
+    color: white;
+}
+/* Modo escuro */
+/*.dark-mode .btn-info .text-dark {*/
+/*    background-color: #007bff; *//* Cor de fundo do botão no modo escuro */
+/*    border-color: #007bff; *//* Cor da borda do botão no modo escuro */
+/*    color: #d20d0d; *//* Cor do texto no botão no modo escuro */
+/*}*/

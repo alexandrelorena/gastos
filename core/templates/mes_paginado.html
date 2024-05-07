@@ -1,0 +1,25 @@
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Despesas do mês de {{ nome_mes }}</title>
+</head>
+<body>
+<!--    <h1>Despesas do mês de {{ nome_mes }}</h1>-->
+    <ul>
+        {% for despesa in despesas %}
+            <li>{{ despesa.descricao }} - R$ {{ despesa.valor }}</li>
+        {% endfor %}
+    </ul>
+    <div>
+        {% if despesas.has_previous %}
+            <a href="{% url 'mes_paginado' nome_mes=nome_mes page=despesas.previous_page_number %}">&laquo;</a>
+        {% endif %}
+        {% if despesas.has_next %}
+            <a href="{% url 'mes_paginado' nome_mes=nome_mes page=despesas.next_page_number %}">&raquo;</a>
+        {% endif %}
+    </div>
+</body>
+</html>
+{% endblock %}

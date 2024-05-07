@@ -1,0 +1,4 @@
+#id_repete, #id_repeticao, #id_paga {
+    display: inline-block !important;
+    margin-right: 10px;
+}

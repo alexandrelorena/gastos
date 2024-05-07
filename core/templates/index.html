@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
+    <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
+
+    <title>{% block title %}Despesas Mensais{% endblock %}</title>
+</head>
+<body>
+
+<div class="col-md-12 my-5">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="d-flex {% if isChrome %}browser-chrome{% elif isFirefox %}browser-firefox{% elif isOpera %}browser-opera{% elif isEdge %}browser-edge{% endif %}">
+                <button onclick="toggleMode()" class="p-1 ml-3 mr-2 md-2 focus:outline-none m-0">
+                    <span class="material-icons text-black" id="lightIcon">light_mode</span>
+                    <span class="material-icons text-white" id="darkIcon">dark_mode</span>
+                </button>
+                <span class="text-xl ml-4 pl-3">{% include 'header.html' with nome_mes=nome_mes %}</span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-9 mx-auto my-4" id="conteudo">{% include 'conteudo.html' with nome_mes=nome_mes %}</div>
+    </div>
+    <div class="row align-items-center">
+        <div class="col-md-6 mx-auto my-4"><footer>{% include 'footer.html' %}</footer></div>
+    </div>
+</div>
+
+<script src="/static/javascript/gastos.js"></script>
+
+</body>
+</html>
