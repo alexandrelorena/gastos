@@ -1,47 +1,35 @@
 {% load static %}
 
-<div>
-    <div class="row p-3">
-        <div class="p-3 border">
-            <div>
-                <form class="formPagamento" id="formPagamento" method="post" action="{% url 'adicionar_despesa' %}">
-                    {% csrf_token %}
-
-                    <!-- Campo: Despesa -->
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="nome" name="nome" placeholder="Adicione uma despesa" required autocomplete="off">
-                    </div>
-
-                    <!-- Campo: Descrição -->
-                    <div class="form-group">
-                        <textarea class="form-control" id="descricao" name="descricao" placeholder="Descrição:" required autocomplete="off"  style="height: 190px;"></textarea>
-                    </div>
-
-                    <!-- Campo: Valor -->
-                    <div class="form-group">
-                        <input type="number" class="form-control" id="valor" name="valor" placeholder="Só números" required autocomplete="off">
-
-                    </div>
-
-                    <!-- Campo: Vencimento -->
-                    <div class="form-group">
-                        <input type="date" class="form-control" id="vencimento" name="vencimento" required style="color: gray">
-                    </div>
-
-                    <!-- Campo: Repetição -->
-                    <div class="form-group">
-                        <input type="number" class="form-control" id="repeticao" name="repeticao" placeholder="Recorrência" required>
-                    </div>
-
-                    <!-- Botão de Envio -->
-                    <div class="form-group text-center">
-                        <button type="submit" class="btn btn-info">Adicionar</button>
-                    </div>
-                </form>
+<div class="container my-3">
+    <div class="col-md-12 p-3 border">
+        <form class="formPagamento" id="formPagamento" method="post" action="{% url 'adicionar_despesa' %}">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <input type="text" class="form-control" id="nome" name="nome" placeholder="Adicione uma despesa" required autocomplete="off">
             </div>
-        </div>
+
+            <div class="form-group">
+                <textarea class="form-control" id="descricao" name="descricao" placeholder="Descrição:" required autocomplete="off" style="height: 191px;"></textarea>
+            </div>
+
+            <div class="form-group">
+                <input type="number" class="form-control" id="valor" name="valor" placeholder="Só números" required autocomplete="off">
+            </div>
+
+            <div class="form-group">
+                <input type="date" class="form-control" id="vencimento" name="vencimento" required>
+            </div>
+
+            <div class="form-group">
+                <input type="number" class="form-control" id="repeticao" name="repeticao" placeholder="Recorrência" required>
+            </div>
+
+            <div class="form-group text-center">
+                <button type="submit" class="btn btn-info">Adicionar</button>
+            </div>
+        </form>
     </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-

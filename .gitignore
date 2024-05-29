@@ -1,1 +1,12 @@
+# Ignorar arquivos de cache do Python
+__pycache__/
+
+# Ignorar arquivos de configuração do IntelliJ IDEA
 .idea/
+
+# Ignorar arquivos binários e diretórios do virtual environment
+gastos/bin/
+gastos/lib/
+gastos/lib64/
+gastos/pyvenv.cfg
+

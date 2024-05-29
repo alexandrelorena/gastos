@@ -1,43 +1,14 @@
-/* style.css */
-
+/* Reset e propriedades básicas */
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+    overflow-x: hidden;
 }
 
-.custom-text {
-        color: #6C757D; /* Altere para a cor desejada */
-        font-size: 16px; /* Altere para o tamanho de fonte desejado */
-        /* Adicione outras propriedades de estilo conforme necessário */
-    }
-
-
-/*#mesDiv {*/
-/*    overflow-y: auto;*/
-/*    overflow-x: hidden;*/
-/*    max-height: 300px;*/
-/*}*/
-
-
-/*#mesDiv::-webkit-scrollbar {*/
-/*    width: 12px;*/
-/*}*/
-
-/*#mesDiv::-webkit-scrollbar-track {*/
-/*    background-color: #f1f1f1;*/
-/*}*/
-
-/*#mesDiv::-webkit-scrollbar-thumb {*/
-/*    background-color: #888; */
-/*    border-radius: 6px;*/
-
-/* ------------------------ tabela ------------------------ */
-
-/* linhas pares */
+/* Tabelas personalizadas */
 .table-striped-custom tbody tr:nth-of-type(even) {
     background-color: #FFFFFF;
 }
 
-/* linhas ímpares */
 .table-striped-custom tbody tr:nth-of-type(odd) {
     background-color: #F8F9FA;
 }
@@ -46,191 +17,108 @@ body {
     text-align: center;
     position: sticky;
     top: 0;
-    background-color: #F8F9FA; /* ou a cor desejada */
+    background-color: #F8F9FA;
 }
 
-/* ------------------------ toggle-mode ------------------------ */
-
-/* ícone do sol (amarelo) */
-#lightIcon {
-    background-color: transparent;
-    color: #ffae00;
-    vertical-align: middle;
-    margin-top: 0.1rem;
-    margin-left: 0.3rem;
-}
-
-/* ícone da lua (preto) */
+/* Ícones de modo claro e escuro */
+#lightIcon,
 #darkIcon {
     background-color: transparent;
-    color: white;
     vertical-align: middle;
     margin-top: 0.1rem;
     margin-left: 0.3rem;
 }
 
-/* --------- Estilos para navegadores diferentes --------- */
-
-/* Estilos específicos para o Chrome */
-.browser-chrome .d-flex .text-xl {
-    margin-left: 3rem; /* ou ml-2 */
-    margin-top: 0.3rem;
+#darkIcon {
+    color: white;
 }
 
-/* Estilos específicos para o Firefox */
+#lightIcon {
+    color: #ffae00;
+}
+
+/* Estilos por navegador */
+.browser-chrome .d-flex .text-xl,
+.browser-firefox .d-flex .text-xl,
+.browser-edge .d-flex .text-xl {
+    margin-left: 3rem;
+}
+
 .browser-firefox .d-flex .text-xl {
-    margin-left: 3rem; /* ou ml-2 */
     margin-top: 0.1rem;
 }
 
-/* Estilos específicos para o Opera */
 .browser-opera .d-flex .text-xl {
-    margin-left: 5rem;  /* ou ml-2 */
+    margin-left: 5rem;
 }
 
-/* Estilos específicos para o Edge */
 .browser-edge .d-flex .text-xl {
-    margin-left: 2rem; /* ou ml-2 */
     margin-top: 0.5rem;
 }
 
-/* -------------------- menu ------------------------ */
-
-/* Força o fundo transparente */
+/* Navegação e links */
 .custom-link {
     background-color: transparent !important;
 }
 
-/* Modo claro */
-.light-mode .nav-link {
-    color: #757C7D;  /* Cor do link no modo claro */
-    border-color: #DEE2E6;
-    background-color: #e00c0c;
-
-}
-
-.active-light {
-    color: blue !important;  /* Defina a cor desejada para o modo claro quando ativo */
-}
-
-.light-mode .nav-link a:hover {
-    color: #007BFF;
-
-}
-
-/* Modo escuro */
-.dark-mode .nav-link {
-    color: #FFFFFF;  /* Cor do link no modo escuro */
-    border-color: #DEE2E6;
-}
-
-.active-dark {
-    color: #00FF00;  /* Cor do texto no modo escuro quando ativo */
-}
-
-
-/* Adicione uma cor para os links visitados em ambos os modos */
-/*#mesButtons a:visited {*/
-/*    color: #40ff00;*/
-/*}*/
-
-        /* Formatação do menu */
-#mesButtons active {
-    color: red;
-    text-decoration: none;
-    border-color: #D1DBE3
-
-}
-
 #mesButtons a:hover {
-    color: #007BFF;
+    color: black;
     text-decoration: none;
-}
-
-#mesButtons li {
-    background-color: danger;
-
 }
 
 #mesButtons li:hover {
-    background-color: #F8F9FA;
+    background-color: #17A2B8;
 }
 
-/* -------------------- light-mode ------------------------ */
-
+/* Modos claro e escuro */
 body.light-mode {
-    background-color: #fff; /* Cor de fundo para o modo claro */
-    color: #343A40; /* Cor do texto para o modo claro */
+    background-color: #fff;
+    color: #343A40;
 }
 
-/* Estilo para o link do mês atual no modo claro */
-.light-mode .current-month .nav-link {
-    color: #9f12ce;
-    background-color: transparent;
+.light-mode .nav-link {
+    color: #757C7D;
+    border-color: #DEE2E6;
+    background-color: #e00c0c;
 }
 
-/* Estilo para os links dos outros meses no modo claro */
-.light-mode .month-item:not(.current-month) .nav-link {
-    color: #808080;
-    background-color: transparent;
+.light-mode select {
+    background-color: white;
+    color: #212529;
 }
-
-/* -------------------- dark-mode ------------------------ */
 
 body.dark-mode {
-    background-color: #212529; /* Cor de fundo para o modo escuro */
-    color: #fff; /* Cor do texto para o modo escuro */
+    background-color: #212529;
+    color: #fff;
     border-color: gray;
 }
 
-/* Estilo para o link do mês atual no modo escuro */
-.active-dark {
-    color: #9f12ce;
-    background-color: transparent;
+.dark-mode .nav-link {
+    color: #FFFFFF;
+    border-color: #DEE2E6;
 }
 
-/* Estilo para os links dos outros meses no modo escuro */
-.dark-mode .month-item:not(.current-month) .nav-link {
-    color: #fff;
-    background-color: transparent;
-}
-
-/* select */
-
-.form-select {
-    background-color: transparent;
-}
-
-.dark-mode.form-select {
-    background-color: #fff;
-}
-
+.dark-mode .form-select,
 .dark-mode select {
     background-color: #212529;
     color: white;
     border: none;
 }
 
-.light-mode select {
-    background-color: white;
-    color: #212529;
-
+/* Elementos comuns e utilidades */
+.custom-text {
+    color: #6C757D;
+    font-size: 16px;
 }
 
-/* -------------------- others ------------------------ */
+.custom-container,
+.custom-width {
+    max-width: 1200px;
+    margin: 0 auto;
+}
 
 .custom-width {
-    max-width: 10px; /* Largura máxima desejada */
-    margin: 0 auto; /* Centraliza o container na página */
-}
-
-body {
-    overflow-x: hidden;
-}
-
-.custom-container {
-    max-width: 1200px; /* Largura máxima desejada */
-    margin: 0 auto; /* Centraliza o container na página */
+    max-width: 10px;
 }
 
 button {
@@ -241,12 +129,49 @@ button {
     background-color: white;
 }
 
-.dark-mode #footer-text {
-    color: white;
+.text-secondary {
+    color: red;
 }
-/* Modo escuro */
-/*.dark-mode .btn-info .text-dark {*/
-/*    background-color: #007bff; *//* Cor de fundo do botão no modo escuro */
-/*    border-color: #007bff; *//* Cor da borda do botão no modo escuro */
-/*    color: #d20d0d; *//* Cor do texto no botão no modo escuro */
-/*}*/
+
+.text-info {
+    color: #17A2B8;
+}
+
+.text-warning {
+    color: #FFC107;
+}
+
+.text-danger {
+    color: #DC3545;
+}
+
+.text-truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#totalDespesasDiv,
+#mensagemDespesas {
+    display: none;
+    color: #6C757D;
+}
+
+.modal-title {
+    color: #000;
+}
+
+.modal-message {
+    text-align: center;
+    margin-top: 15px;
+    color: #fff;
+}
+
+#modalDelete .modal-content {
+    background-color: #17A2B8; /* Defina a cor de fundo desejada aqui */
+    width: 300px;
+}
+
+.div.modal-header {
+    border-bottom: red;
+}

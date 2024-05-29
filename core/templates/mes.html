@@ -1,16 +1,16 @@
 {% load static %}
-
-
-<link rel="stylesheet" href="{% static 'css/style.css' %}">
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
-<!-- Bootstrap CSS -->
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciador de Despesas</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="icon" href="{% static 'images/favicon.ico' %}">
+</head>
+<body>
 
 <div class="my-3 my-0">
     <div class="row">
@@ -50,16 +50,17 @@
                     <tbody>
                     {% for despesa in despesas_do_mes %}
                     <tr class=" despesa-row" data-status="{% if despesa.paga %}paga{% elif despesa.vencimento < hoje %}atrasada{% else %}a_vencer{% endif %}">
-                        <th scope="row" style="width: 10px; color:
-                        {% if despesa.vencimento > hoje and not despesa.paga %}#6C757D
-                        {% elif despesa.vencimento > hoje and despesa.paga %}#17A2B8
-                        {% elif despesa.vencimento < hoje and not despesa.paga %}#DC3545
-                        {% elif despesa.vencimento < hoje and despesa.paga %}#17A2B8
-                        {% elif despesa.vencimento == hoje and despesa.paga %}#17A2B8
-                        {% elif despesa.vencimento == hoje and not despesa.paga %}#FFC107
-                        {% else %}#17A2B8{% endif %};">
-                            {{ forloop.counter|stringformat:"02d" }} </th>
-
+                            <th scope="row" class="
+                                {% if despesa.vencimento > hoje and not despesa.paga %}text-secondary
+                                {% elif despesa.vencimento > hoje and despesa.paga %}text-info
+                                {% elif despesa.vencimento < hoje and not despesa.paga %}text-danger
+                                {% elif despesa.vencimento < hoje and despesa.paga %}text-info
+                                {% elif despesa.vencimento == hoje and despesa.paga %}text-info
+                                {% elif despesa.vencimento == hoje and not despesa.paga %}text-warning
+                                {% else %}text-info{% endif %}" style="width: 10px;">
+                                {{ forloop.counter|stringformat:"02d" }}
+                            </th>
+                            
                             <!---------------------------------------------- ⇓ CASO 1: À VENCER ⇓ -------------------------------------------------->
 
                             {% if despesa.vencimento > hoje and not despesa.paga %}
@@ -72,7 +73,7 @@
                         </td>
                         <td class="material-icons-small text-center text-primary"><a href="{% url 'editar_despesa' pk=despesa.id %}">↻</a></td>
                         <td class="material-icons-small text-center text-danger">
-                                <button type="button" onclick="abrirModalExcluir({{ despesa.id }},  '{{ despesa.nome }}',  {{  despesa.valor }})" data-despesa-id="{{ despesa.id }}">x</button>
+                            <button type="button" data-id="{{ despesa.id }}" data-nome="{{ despesa.nome }}" data-valor="{{ despesa.valor }}" onclick="abrirModalExcluir(this)" data-despesa-id="{{ despesa.id }}">x</button>
                         </td>
 
                         {% elif despesa.paga %}
@@ -82,7 +83,7 @@
                         <td class="material-icons-small text-center text-success">✔</td>
                         <td class="material-icons-small text-center text-secondary">⁻</td>
                         <td class="material-icons-small text-center text-danger">
-                                <button type="button" onclick="abrirModalExcluir({{ despesa.id }},  '{{ despesa.nome }}',  {{  despesa.valor }})" data-despesa-id="{{ despesa.id }}">x</button>
+                            <button type="button" data-id="{{ despesa.id }}" data-nome="{{ despesa.nome }}" data-valor="{{ despesa.valor }}" onclick="abrirModalExcluir(this)" data-despesa-id="{{ despesa.id }}">x</button>
                         </td>
 
                         <!--------------------------------------- ⇓ CASO 2: VENCE HOJE E NÃO PAGO ⇓ ------------------------------------------->
@@ -100,7 +101,7 @@
                         </td>
                         <td class="material-icons-small text-center text-primary"><a href="{% url 'editar_despesa' pk=despesa.id%}">↻</a></td>
                         <td class="material-icons-small text-center text-danger">
-                                <button type="button" onclick="abrirModalExcluir({{ despesa.id }},  '{{ despesa.nome }}',  {{  despesa.valor }})" data-despesa-id="{{ despesa.id }}">x</button>
+                            <button type="button" data-id="{{ despesa.id }}" data-nome="{{ despesa.nome }}" data-valor="{{ despesa.valor }}" onclick="abrirModalExcluir(this)" data-despesa-id="{{ despesa.id }}">x</button>
                         </td>
 
                         <!---------------------------------------------- ⇓ CASO 3: VENCIDO ⇓ -------------------------------------------------->
@@ -124,7 +125,7 @@
                         <td class="align-center text-info text-center">✔</td>
                         <td class="material-icons-small text-center text-primary"><a href="{% url 'editar_despesa' pk=despesa.id%}">↻</a></td>
                         <td class="material-icons-small text-center text-danger">
-                                <button type="button" onclick="abrirModalExcluir({{ despesa.id }},  '{{ despesa.nome }}',  {{ despesa.valor|floatformat:2 }})" data-despesa-id="{{ despesa.id }}">x</button>
+                            <button type="button" data-id="{{ despesa.id }}" data-nome="{{ despesa.nome }}" data-valor="{{ despesa.valor }}" onclick="abrirModalExcluir(this)" data-despesa-id="{{ despesa.id }}">x</button>
                         </td>
                         {% endif %}
                     </tr>
@@ -143,19 +144,19 @@
     </div>
 </div>
 
-<div id="totalDespesasDiv" style="display: none;">
-    O total de despesas selecionadas é: <span id="totalSelect">0.00</span>
+<div id="totalDespesasDiv">
+    O total de despesas selecionadas é: R$ <span id="totalSelect">0,00</span>
 </div>
 
-    <!-- Modal de exclusão -->
+<!-- Modal de exclusão -->
 <div class="modal" id="modalDelete">
     <div class="modal-dialog modal-sm">
         <div class="modal-content align-items-center">
             <div class="modal-header">
-                <h5 class="modal-title" style="color: #6C757D">Excluir a despesa:</h5>
+                <h5 class="modal-title">܀ Excluir despesa ܀</h5>
             </div>
-            <div class="modal-body text-center">
-                <p id="modalMessage" style="color: #17A2B8"></p> <!-- Elemento para exibir mensagens -->
+            <div class="modal-body">
+                <p id="modalMessage" class="modal-message"></p> <!-- Elemento para exibir mensagens -->
             </div>
             <div class="modal-footer justify-content-center">
                 <button type="button" class="btn btn-warning" data-dismiss="modal" onclick="cancelarExclusao()">Cancelar</button>
@@ -165,7 +166,11 @@
     </div>
 </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 <script src="/static/javascript/gastos.js"></script>
 
-
-
+</body>
+</html>

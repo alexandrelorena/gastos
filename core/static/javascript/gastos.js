@@ -1,10 +1,13 @@
-// ---------------------------------------------- ↧ INDEX - INDEX.HTML ↧ ---------------------------------------------
 
- function toggleMode() {
-    const body = document.body;
+// Seleciona o elemento body do documento.
+const body = document.body;
+
+/* ܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀ ↧ INDEX - INDEX.HTML ↧ ܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀ */
+//  Esta função alterna entre os modos claro e escuro da aplicação, atualizando a interface e armazenando a preferência do usuário localmente.
+function toggleMode() {
     const lightIcon = document.getElementById('lightIcon');
     const darkIcon = document.getElementById('darkIcon');
-    const mesButtons = document.getElementById('mesButtons').getElementsByTagName('a');
+    const mesButtons = document.getElementById('mesButtons').querySelectorAll('a');
 
     body.classList.toggle('light-mode');
     body.classList.toggle('dark-mode');
@@ -15,164 +18,124 @@
     lightIcon.style.display = currentMode === 'light' ? 'inline-block' : 'none';
     darkIcon.style.display = currentMode === 'dark' ? 'inline-block' : 'none';
 
-    for (let i = 0; i < mesButtons.length; i++) {
-        mesButtons[i].classList.toggle('btn-light', currentMode === 'light');
-        mesButtons[i].classList.toggle('btn-dark', currentMode === 'dark');
-    }
+    mesButtons.forEach(button => {
+        button.classList.toggle('btn-light', currentMode === 'light');
+        button.classList.toggle('btn-dark', currentMode === 'dark');
+    });
 }
 
+//  Este evento executa uma função ao carregar a página, ajustando a interface de acordo com a preferência de modo armazenada localmente.
 document.addEventListener('DOMContentLoaded', () => {
     const preferredMode = localStorage.getItem('preferredMode');
-    const body = document.body;
+
     const lightIcon = document.getElementById('lightIcon');
     const darkIcon = document.getElementById('darkIcon');
 
-    if (preferredMode === 'light') {
-        body.classList.add('light-mode');
-        lightIcon.style.display = 'inline-block';
-        darkIcon.style.display = 'none';
-    } else if (preferredMode === 'dark') {
-        body.classList.add('dark-mode');
-        lightIcon.style.display = 'none';
-        darkIcon.style.display = 'inline-block';
+    if (preferredMode === 'light' || preferredMode === 'dark') {
+        body.classList.add(`${preferredMode}-mode`);
+        lightIcon.style.display = preferredMode === 'light' ? 'inline-block' : 'none';
+        darkIcon.style.display = preferredMode === 'dark' ? 'inline-block' : 'none';
     }
 });
-
-//const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
-//const isFirefox = /Firefox/.test(navigator.userAgent);
-//const isOpera = /OPR/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
-//const isEdge = /Edg/.test(navigator.userAgent);
-//const isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
-//
-//if (isChrome) {
-//    document.body.classList.add('browser-chrome');
-//} else if (isFirefox) {
-//    document.body.classList.add('browser-firefox');
-//} else if (isOpera) {
-//    document.body.classList.add('browser-opera');
-//} else if (isEdge) {
-//    document.body.classList.add('browser-edge');
-//}
-
+    
+// Define a variável userAgent apenas se ela não estiver definida.
 if (!window.userAgent) {
-    const userAgent = navigator.userAgent.toLowerCase();
-    window.userAgent = userAgent;
+    window.userAgent = navigator.userAgent.toLowerCase();
 }
 
-const body = document.body;
+// Mapeia os navegadores para suas respectivas classes e adiciona a classe correspondente se o navegador for detectado.
+const browserClasses = {
+    'chrome': 'browser-chrome',
+    'firefox': 'browser-firefox',
+    'opr': 'browser-opera',
+    'edg': 'browser-edge',
+    'safari': 'browser-safari'
+};
 
-if (window.userAgent.includes('chrome') && window.userAgent.includes('google')) body.classList.add('browser-chrome');
-else if (window.userAgent.includes('firefox')) body.classList.add('browser-firefox');
-else if (window.userAgent.includes('opr') && window.userAgent.includes('google')) body.classList.add('browser-opera');
-else if (window.userAgent.includes('edg')) body.classList.add('browser-edge');
-else if (window.userAgent.includes('safari') && window.userAgent.includes('apple')) body.classList.add('browser-safari');
+// Itera sobre as chaves do objeto browserClasses.
+for (const browser in browserClasses) {
+    // Verifica se o user agent contém a chave do navegador.
+    if (window.userAgent.includes(browser)) {
+        // Adiciona a classe correspondente ao elemento body.
+        body.classList.add(browserClasses[browser]);
+        // Interrompe o loop após encontrar o navegador correspondente.
+        break;
+    }
+}
 
-
-window.addEventListener('scroll', function () {
-    // Verificar se os elementos existem antes de tentar acessá-los
+// Ajusta a classe do elemento .footer dependendo se há rolagem suficiente no elemento .table tbody.
+function handleScroll() {
     const tableBody = document.querySelector('.table tbody');
     const footer = document.querySelector('.footer');
 
-    // Verificar se os elementos foram encontrados
     if (tableBody && footer) {
-        // Verificar se há rolagem
         const hasScroll = tableBody.scrollHeight > tableBody.clientHeight;
-
-        // Adicionar ou remover a classe dependendo se há rolagem
         footer.classList.toggle('footer-with-scroll', hasScroll);
     }
-});
+}
 
-    // ---------------------------------------------- ↧ MENU - MENU.HTML ↧ ---------------------------------------------
+window.addEventListener('scroll', handleScroll);
 
+/* ܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀ ↧ MENU - MENU.HTML ↧ ܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀ */
+
+    // Carrega o conteúdo completo de um mês na página, atualizando a visualização e o cabeçalho.
     function carregarConteudoCompleto(pagina, mesAbreviado) {
         const mesDiv = document.getElementById('mesDiv');
         const header = document.getElementById('header');
-        const xhrMes = new XMLHttpRequest();
-
+    
         const mesesCompletos = {
-            'jan': 'Janeiro',
-            'fev': 'Fevereiro',
-            'mar': 'Março',
-            'abr': 'Abril',
-            'mai': 'Maio',
-            'jun': 'Junho',
-            'jul': 'Julho',
-            'ago': 'Agosto',
-            'set': 'Setembro',
-            'out': 'Outubro',
-            'nov': 'Novembro',
-            'dez': 'Dezembro'
+            'jan': 'Janeiro', 'fev': 'Fevereiro', 'mar': 'Março', 'abr': 'Abril',
+            'mai': 'Maio', 'jun': 'Junho', 'jul': 'Julho', 'ago': 'Agosto',
+            'set': 'Setembro', 'out': 'Outubro', 'nov': 'Novembro', 'dez': 'Dezembro'
         };
-
-        // Limpa os botões existentes
+    
         const mesButtons = document.getElementById('mesButtons');
         mesButtons.innerHTML = '';
-
-        Object.keys(mesesCompletos).forEach(function (abreviacao) {
-            const nomeCompleto = mesesCompletos[abreviacao];
+    
+        Object.entries(mesesCompletos).forEach(([abreviacao, nomeCompleto]) => {
             const li = document.createElement('li');
             li.classList.add('nav-item');
-            li.appendChild(criarLinkMes(abreviacao, nomeCompleto)); // Passa abreviação para mostrar no link
+            li.appendChild(criarLinkMes(abreviacao, nomeCompleto));
             mesButtons.appendChild(li);
-            console.log(mesAbreviado, abreviacao, nomeCompleto);
         });
-
-//        xhrMes.onreadystatechange = function () {
-//            if (xhrMes.readyState === 4 && xhrMes.status === 200) {
-//                mesDiv.innerHTML = xhrMes.responseText;
-//                // Atualiza o cabeçalho somente após carregar o conteúdo
-//                console.log("Valor de mesAbreviado:", mesAbreviado);
-//                const mesCompleto = mesesCompletos[mesAbreviado];
-//                header.innerHTML = `Despesas do  mês de ${mesCompleto}`;
-//            }
-//        };
-
-xhrMes.onreadystatechange = function () {
-    if (xhrMes.readyState === 4 && xhrMes.status === 200) {
-        mesDiv.innerHTML = xhrMes.responseText;
-        // Atualiza o cabeçalho somente após carregar o conteúdo
-        console.log("Valor de mesAbreviado:", mesAbreviado);
-        if (mesesCompletos.hasOwnProperty(mesAbreviado)) {
-            const mesCompleto = mesesCompletos[mesAbreviado];
-            header.innerHTML = `Despesas do mês de ${mesCompleto}`;
-        } else {
-            console.error(`Mes abreviado "${mesAbreviado}" não é válido.`);
-        }
-    }
-};
-
-
+    
+        const xhrMes = new XMLHttpRequest();
+        xhrMes.onreadystatechange = function () {
+            if (xhrMes.readyState === 4 && xhrMes.status === 200) {
+                mesDiv.innerHTML = xhrMes.responseText;
+                if (mesesCompletos.hasOwnProperty(mesAbreviado)) {
+                    const mesCompleto = mesesCompletos[mesAbreviado];
+                    header.innerHTML = `Despesas do mês de ${mesCompleto}`;
+                } else {
+                    console.error(`Mês abreviado "${mesAbreviado}" não é válido.`);
+                }
+            }
+        };
+    
         xhrMes.open('GET', `${pagina}/${mesAbreviado}/`, true);
         xhrMes.send();
     }
-
+    
+    // Carrega automaticamente o conteúdo do mês atual quando a página é carregada, evitando carregamentos duplicados.
     document.addEventListener('DOMContentLoaded', function () {
-    const body = document.body;
 
-    if (!body.classList.contains('loaded')) {
-        const mesAtual = new Date().toLocaleString('pt-BR', { month: 'short' }).toLowerCase().trim();
-        const mesAbreviado = mesAtual.replace(".", ""); // Remover o ponto extra
-        console.log("Mês atual:", mesAbreviado);
-
-        carregarConteudoCompleto('mes', mesAbreviado);
-        body.classList.add('loaded');
-    }
-});
-
-
+        if (!body.classList.contains('loaded')) {
+            const mesAtual = new Date().toLocaleString('pt-BR', { month: 'short' }).toLowerCase().trim().replace(".", "");
+            carregarConteudoCompleto('mes', mesAtual);
+            body.classList.add('loaded');
+        }
+    });
+    
+    // Cria e configura links de navegação para cada mês, permitindo a navegação entre eles.
     function criarLinkMes(abreviacao, nomeCompleto) {
-        var link = document.createElement('a')
-        link.classList.add('nav-link', 'custom-link', 'btn',  'btn-light', 'btn-sm', 'm-0.5');
+        const link = document.createElement('a');
+        link.classList.add('nav-link', 'custom-link', 'btn', 'btn-light', 'btn-sm', 'm-0.5', 'active-dark', 'active-light');
         link.href = 'javascript:void(0)';
         link.onclick = function () {
-            var mesLowerCase = abreviacao.toLowerCase();
+            const mesLowerCase = abreviacao.toLowerCase();
             carregarConteudoCompleto('mes', mesLowerCase);
-            // Adicione a classe ativa ao link visitado
-            var linksMes = document.querySelectorAll('.nav-link');
-            linksMes.forEach(function (link) {
-                link.classList.remove('active-light', 'active-dark');
-            });
+            const linksMes = document.querySelectorAll('.nav-link');
+            linksMes.forEach(link => link.classList.remove('active-light', 'active-dark'));
             if (this.textContent.toLowerCase() === mesLowerCase) {
                 if (document.body.classList.contains('dark-mode')) {
                     this.classList.add('active-dark');
@@ -181,300 +144,333 @@ xhrMes.onreadystatechange = function () {
                 }
             }
         };
-        link.textContent = abreviacao.toUpperCase(); // Exibe a abreviação como texto do link
-        link.dataset.nomeCompleto = nomeCompleto; // Armazena o nome completo do mês como atributo de dados
+        link.textContent = abreviacao.toUpperCase();
+        link.dataset.nomeCompleto = nomeCompleto;
         return link;
     }
 
-    // ---------------------------------------------- ↧ DESPESAS - MES.HTML ↧ ---------------------------------------------
+    /* ܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀ ↥  MENU - MENU.HTML ↥ ܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀ */
+    
+    /* ܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀ ↧ DESPESAS - MES.HTML ↧ ܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀ */
 
+    //  Usado em cenários de autenticação de usuário, gerenciamento de sessão e personalização da experiência do usuário, 
+        // permitindo recuperar valores de cookies relevantes para esses fins.
+        function getCookie(name) {
+            const cookieName = `${name}=`;
+            const cookies = document.cookie.split(';');
+        
+            for (const cookie of cookies) {
+                const trimmedCookie = cookie.trim();
+                if (trimmedCookie.startsWith(cookieName)) {
+                    return decodeURIComponent(trimmedCookie.substring(cookieName.length));
+                }
+            }
+        
+            return null;
+        }       
+       
+     /* ܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀ ↥ DESPESAS - MES.HTML ↥ ܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀ */
+    
+        
+    /* ܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀ ↧ CARREAR CONTEÚDO ↧ ܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀ */
+
+// Carrega dinamicamente o conteúdo de uma página, filtrando por mês, e atualiza o conteúdo e o cabeçalho da página.
+function carregarConteudo(pagina, mes) {
+    const conteudo = document.getElementById('conteudo');
+    const header = document.getElementById('header');
+    const mesCompleto = mes ? capitalizeFirstLetter(mes) : '';
+    const url = mesCompleto ? `${pagina}/${mesCompleto}/` : pagina;
+
+    const xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            conteudo.innerHTML = xhr.responseText;
+            atualizarHeader(header, mesCompleto);
+        }
+    };
+    xhr.open('GET', url, true);
+    xhr.send();
+
+    adicionarEventoFormulario('edita_despesa', url, mes);
+}
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function atualizarHeader(headerElement, mes) {
+    const anoAtual = getDataAtual();
+    headerElement.innerHTML = `<h1>Despesas do mês de ${mes} - ${anoAtual}</h1>`;
+}
+
+function adicionarEventoFormulario(formId, url, mes) {
+    const form = document.getElementById(formId);
+    if (form) {
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            enviarFormulario(form, url, mes);
+        });
+    }
+}
+
+    /* ܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀ ↥ CARREAR CONTEÚDO ↥ ܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀ */
+
+    /* ܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀ ↧ PAGAR DESPESA ↧ ܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀ */
+
+    function pagar(despesaId) {
+        // Confirma se o ID da despesa é um número inteiro antes de continuar
+        if (!Number.isInteger(parseInt(despesaId))) {
+            console.error('O ID fornecido não é um número inteiro válido.');
+            return;
+        }
+    
+        // Obtém o token CSRF para uso na requisição
+        const csrftoken = getCookie('csrftoken');
+    
+        // Realiza uma chamada AJAX para registrar o pagamento da despesa
+        $.ajax({
+            headers: {
+                'X-CSRFToken': csrftoken
+            },
+            url: `/pagar/${despesaId}/`,  // Utiliza o ID da despesa para construir o URL
+            type: 'POST',
+            data: {
+                'despesa.id': despesaId,
+            },
+            success: function(data) {
+                if (data && data.success) {
+                    // Se a despesa foi marcada como paga, atualiza o visual na tela
+                    atualizarStatusPago(despesaId);
+                } else {
+                    // Reporta um erro se não conseguiu marcar a despesa como paga
+                    console.error('Falha ao atualizar o status da despesa:', data.error || 'Erro desconhecido');
+                }
+    
+                // Recarrega a página para refletir as mudanças
+                window.location.reload(true);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // Log detalhado de erros de rede ou servidor
+                console.error('Falha na requisição AJAX:', textStatus, errorThrown);
+            },
+        });
+    }
+    
+    // Atualiza a interface do usuário para mostrar que a despesa foi paga
+    function atualizarStatusPago(despesaId) {
+        $(`#pago_${despesaId}`).prop('checked', true);
+        $(`#pago_${despesaId}`).parent().css('color', 'green');
+    }
+    
+    // Obtém o valor de um cookie pelo nome
     function getCookie(name) {
         let cookieValue = null;
         if (document.cookie && document.cookie !== '') {
             const cookies = document.cookie.split(';');
             for (let i = 0; i < cookies.length; i++) {
                 const cookie = cookies[i].trim();
-                // Verifique se esta é a cookie que estamos procurando
-    if (cookie.substring(0, name.length + 1) === (name + '=')) {
-    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-    break;
-}
-}
-}
-    return cookieValue;
-}
+                if (cookie.startsWith(name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }  
 
-    // ---------------------------------------------- ↧ CARREAR CONTEÚDO ↧ ---------------------------------------------
+    /* ܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀ ↥ PAGAR DESPESA ↥ ܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀ */
 
-    // Função para carregar conteúdo (GET) e adicionar evento de envio do formulário (POST)
-    function carregarConteudo(pagina, mes) {
-    const conteudo = document.getElementById('conteudo');
-    const header = document.getElementById('header');
-    const url = mesCompleto ? `${pagina}/${mesCompleto}/` : pagina;
+    /* ܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀ ↧ DATA ATUAL ↧ ܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀ */
 
-    // Carregar conteúdo usando XMLHttpRequest com método GET
-    const xhrGet = new XMLHttpRequest();
-    xhrGet.onreadystatechange = function () {
-    if (xhrGet.readyState === 4 && xhrGet.status === 200) {
-    conteudo.innerHTML = xhrGet.responseText;
-
-    const mesCapitalizado = mes.charAt(0).toUpperCase() + mes.slice(1);
-    const anoAtual = getDataAtual();
-    header.innerHTML = `<h1> Despesas do mês de ${mesCapitalizado + ' - ' + anoAtual}</h1>`;
-}
-};
-    xhrGet.open('GET', url, true);
-    xhrGet.send();
-
-    // Adicionar um evento de envio do formulário
-    const form = document.getElementById('edita_despesa');
-    form.addEventListener('submit', function (event) {
-    event.preventDefault();
-    enviarFormulario(form, url, mes);
-});
-}
-
-    // --------------------------------------------- ↥ CARREAR CONTEÚDO ↥ ----------------------------------------------
-
-    // --------------------------------------------- ↧ ATUALIZAR DESPESA ↧ ---------------------------------------------
-
-    // Função para enviar o formulário (POST) e atualizar a página
-    function enviarFormulario(form, url, mes) {
-    console.log('enviarFormulario chamado');
-    const conteudo = document.getElementById('conteudo');
-    const header = document.getElementById('header');
-    const formData = new FormData(form);
-
-    // Enviar formulário usando XMLHttpRequest com método POST
-    const xhrPost = new XMLHttpRequest();
-    xhrPost.onreadystatechange = function () {
-    if (xhrPost.readyState === 4) {
-    if (xhrPost.status === 200) {
-    conteudo.innerHTML = xhrPost.responseText;
-
-    const mesCapitalizado = mes.charAt(0).toUpperCase() + mes.slice(1);
-    const anoAtual = getDataAtual();
-    header.innerHTML = `<h1> Despesas do mês de ${mesCapitalizado + ' - ' + anoAtual}</h1>`;
-} else {
-    console.error('Erro ao carregar conteúdo:', xhrPost.status, xhrPost.statusText);
-}
-}
-};
-
-    xhrPost.open('POST', url, true);
-    xhrPost.send(formData);
-}
-
-    // --------------------------------------------- ↥ ATUALIZAR DESPESA ↥ ---------------------------------------------
-
-    // ----------------------------------------------- ↧ PAGAR DESPESA ↧ -----------------------------------------------
-
-    function pagar(despesaId) {
-    // Verifiqa se despesaId é um valor inteiro
-    if (!Number.isInteger(parseInt(despesaId))) {
-    console.error('despesaId não é um valor inteiro válido.');
-    return;
-}
-
-    // Resto da sua função pagar...Obter o token CSRF antes da chamada AJAX
-    const csrftoken = getCookie('csrftoken');
-
-    // Enviar uma requisição AJAX para o servidor
-    $.ajax({
-    headers: {
-    'X-CSRFToken': csrftoken
-},
-    url: '/pagar/' + despesaId + '/',  // Construa o URL dinamicamente
-    type: 'POST',
-    data: {
-    'despesa.id': despesaId,
-},
-    success: function(data) {
-    if (data && data.success) {
-    // Atualiza a interface do usuário para refletir o status pago
-    $(`#pago_${despesaId}`).prop('checked', true);
-    $(`#pago_${despesaId}`).parent().css('color', 'green');
-} else {
-    // Lidar com erros
-    console.error('Erro ao marcar a despesa como paga:', data && data.error ? data.error : 'Erro desconhecido');
-}
-
-    // Força a recarga da página
-    window.location.reload(true);
-},
-    error: function(jqXHR, textStatus, errorThrown) {
-    console.error('Erro AJAX:', textStatus, errorThrown);
-},
-});
-}
-
-    // ----------------------------------------------- ↥ PAGAR DESPESA ↥ -----------------------------------------------
-
-    // ------------------------------------------------- ↧ DATA ATUAL ↧ ------------------------------------------------
-
-    function getDataAtual() {
+//  Retorna o ano atual.
+function getDataAtual() {
     const dataAtual = new Date();
-    const mes = dataAtual.getMonth() + 1;
-    const ano = dataAtual.getFullYear();
-    return `${mes}/${ano}`;
+    const mes = dataAtual.getMonth() + 1; // getMonth() retorna mês de 0 a 11, então adiciona 1 para o formato humano
+    const ano = dataAtual.getFullYear(); // getFullYear() retorna o ano completo
+    console.log(dataAtual); // Log da data completa para referência de depuração
+    return `${mes}/${ano}`; // Retorna a string no formato "mês/ano"
 }
 
-    // ------------------------------------------------ ↥ DATA ATUAL ↥ -------------------------------------------------
+    /* ܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀ ↥ DATA ATUAL ↥ ܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀ */
 
-    // ------------------------------------------ ↧ EXCLUIR DESPESA - MODAL ↧ ------------------------------------------
+    /* ܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀ ↧ EXCLUIR DESPESA - MODAL ↧ ܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀ */
 
-    function abrirModalExcluir(despesaId, nomeDespesa, despesaValor) {
-    console.log('ID da Despesa:', despesaId);
-    console.log('Nome da Despesa:', nomeDespesa);
-    console.log('Valor da Despesa:', despesaValor.toFixed(2));
+// Abre o modal de exclusão e preenche com os dados da despesa
+function abrirModalExcluir(button) {
+    var id = button.getAttribute('data-id');
+    var nome = button.getAttribute('data-nome');
+    var valor = button.getAttribute('data-valor');
 
-    // Formatar o valor da despesa para duas casas decimais
-        let valorFormatado = parseFloat(despesaValor).toFixed(2);
-        const valorNumerico = parseFloat(despesaValor);
-        valorFormatado = valorNumerico.toFixed(2);
+    // Formata o valor da despesa para duas casas decimais para apresentação
+    const valorFormatado = parseFloat(valor).toFixed(2);
 
-        // Configurar o ID da despesa, o nome e o valor no modal
-    $('#modalDelete').find('.modal-body p').html(`<strong>${nomeDespesa}</strong>`);
-    $('#modalDelete').find('.modal-footer .btn-danger').attr('onclick', `excluirDespesa(${despesaId})`);
+    // Configura os dados da despesa nos elementos do modal
+    $('#modalDelete').find('.modal-body p').html(`<strong>${nome}: ${valor}</strong>`);
+    $('#modalDelete').find('.modal-footer .btn-danger').attr('onclick', `excluirDespesa(${id})`);
+    $('#nomeDespesaModal').text(nome);
 
-    // Atualizar o nome da despesa no modal
-    $('#nomeDespesaModal').text(nomeDespesa);
-
-    // Exibir o modal de exclusão
+    // Mostra o modal de exclusão
     $('#modalDelete').modal('show');
 }
 
-    // Função para excluir a despesa
-    function excluirDespesa(despesaId) {
-    // Aqui você pode enviar uma solicitação AJAX para excluir a despesa do backend
+// Executa a exclusão da despesa
+function excluirDespesa(despesaId) {
     console.log('Excluir despesa com o ID:', despesaId);
 
-    // Enviar uma solicitação AJAX para excluir a despesa
+    // Requisição AJAX para remover a despesa no servidor
     $.ajax({
-    url: '/deletar/' + despesaId + '/',  // Substitua pela URL correta do endpoint de exclusão de despesa
-    type: 'POST',
-    headers: {
-    'X-CSRFToken': getCookie('csrftoken')  // Adicione o token CSRF aos cabeçalhos da solicitação
-},
-    success: function(response) {
-    // Exibir mensagem de sucesso no modal
-    $('#modalMessage').text('Despesa excluída com sucesso!');
-
-    // Fechar o modal após um breve intervalo de tempo (opcional)
-    setTimeout(function() {
-    $('#modalDelete').modal('hide');
-    // Recarregar a página após 5 segundos
-    setTimeout(function() {
-    window.location.reload(true);
-}, 2000);
-}, 2000);
-
-},
-
-    error: function(xhr, status, error) {
-    // Exibir mensagem de erro no modal
-    $('#modalMessage').text('Erro ao excluir a despesa: ' + error);
-
-    // Exiba detalhes completos do erro no console
-    console.log(xhr.responseText);
-}
-});
+        url: `/deletar/${despesaId}/`,
+        type: 'POST',
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken')  // Inclui o token CSRF para segurança
+        },
+        success: function(response) {
+            // Informa sucesso e fecha o modal automaticamente após 2 segundos
+            $('#modalMessage').text('Despesa excluída com sucesso!');
+            setTimeout(() => {
+                $('#modalDelete').modal('hide');
+                setTimeout(() => {
+                    window.location.reload(true);
+                }, 2000);
+            }, 2000);
+        },
+        error: function(xhr, status, error) {
+            // Mostra mensagem de erro e registra detalhes do erro
+            $('#modalMessage').text('Erro ao excluir a despesa: ' + error);
+            console.log(xhr.responseText);
+        }
+    });
 }
 
-    // Função para cancelar a exclusão da despesa
-    function cancelarExclusao() {
-    // Fechar o modal de exclusão
+// Fecha o modal de exclusão sem realizar ações
+function cancelarExclusao() {
     $('#modalDelete').modal('hide');
 }
 
-    // ------------------------------------------ ↥ EXCLUIR DESPESA - MODAL ↥ ------------------------------------------
-
-    // --------------------------------------------- ↧ SELETOR DE STATUS ↧ ---------------------------------------------
-
-    function applyStatusFilter(selectedStatus, pagina, mes) {
-        let message = "";
-        let textColor = "";
-
-        const rows = document.querySelectorAll('.despesa-row');
-        let hasDespesaOfType = false;
-
-//        for (let i = 0; i < rows.length; i++) {
-//            const row = rows[i];
-//            const status = row.getAttribute('data-status');
-//
-//            if (selectedStatus === '' || selectedStatus === status) {
-//                row.style.display = 'table-row'; // Exibe a linha se corresponder ao seletor
-//                hasDespesaOfType = true; // Define como true se houver despesa correspondente
-//            } else {
-//                row.style.display = 'none'; // Oculta a linha se não corresponder ao seletor
-//            }
-//        }
-let somaDespesas = 0; // Inicializa a soma das despesas
-
-for (let i = 0; i < rows.length; i++) {
-    const row = rows[i];
-    const status = row.getAttribute('data-status');
-    const valorCelula = row.cells[2].textContent; // Supondo que a coluna dos valores seja a terceira
-    const valorNumerico = parseFloat(valorCelula.replace(',', '.')); // Substitui vírgula por ponto e converte para número
-
-    if (selectedStatus === '' || selectedStatus === status) {
-        row.style.display = 'table-row';
-        somaDespesas += valorNumerico; // Soma os valores corretamente tratados
-    } else {
-        row.style.display = 'none';
-    }
-}
-
-
-// Aqui você pode atualizar a interface do usuário com a soma das despesas, por exemplo:
-document.getElementById('totalSelect').textContent = somaDespesas.toFixed(2); // Formata para 2 casas decimais
-
-// Verifica se o valor da soma das despesas é maior que zero
-if (somaDespesas > 0) {
-    document.getElementById('totalDespesasDiv').style.display = 'block'; // Exibe o bloco de código
-} else {
-    document.getElementById('totalDespesasDiv').style.display = 'none'; // Oculta o bloco de código
-}
-
-// Se não houver despesas do tipo selecionado, exibir a mensagem apropriada
-if (somaDespesas === 0) {
-    switch (selectedStatus) {
-        case 'paga':
-            message = 'Não há despesas pagas para exibir neste mês!';
-            textColor = "brown";
-            break;
-        case 'atrasada':
-            message = 'Não há despesas atrasadas para exibir neste mês!';
-            textColor = "brown";
-            break;
-        case 'a_vencer':
-            message = 'Não há despesas à vencer neste mês!';
-            textColor = "brown";
-            break;
-        default:
-            message = ''; // Caso padrão, mensagem vazia
-    }
-} else {
-    // Se houver despesas, limpar a mensagem
-    message = '';
-}
-
-// Atualizar o elemento HTML com a mensagem e cor definida
-const mensagemElement = document.getElementById('mensagemDespesas');
-mensagemElement.innerHTML = "<span style='color:" + textColor + "'>" + message + "</span>";
-
-
-        // Se não houver despesa do tipo selecionado, exibir a mensagem
-        if (!hasDespesaOfType) {
-            mensagemElement.style.display = 'block';
-            totalDespesasElement.style.display = 'none';
-        } else {
-            mensagemElement.style.display = 'none';
-            totalDespesasElement.style.display = 'inline'; // ou 'block' dependendo do estilo que você deseja
-
+// Função auxiliar para obter o valor de um cookie específico
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Encontra o cookie correto e extrai seu valor
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
         }
     }
+    return cookieValue;
+}
 
-    // --------------------------------------------- ↥ SELETOR DE STATUS ↥ ---------------------------------------------
+    /* ܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀ ↥ EXCLUIR DESPESA - MODAL ↥ ܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀ */
+
+
+    /* ܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀ ↧ SELETOR DE STATUS ↧ ܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀ */
+
+// Retorna o mês atualmente selecionado pelo usuário
+const getSelectedMonth = () => {
+    const monthSelect = document.getElementById('mesSelect');
+    return monthSelect ? monthSelect.value : null;
+};
+
+// Retorna o status de despesa selecionado no filtro
+const getSelectedStatus = () => {
+    const statusSelect = document.getElementById('statusFilter');
+    return statusSelect ? statusSelect.value : null;
+};
+
+// Converte e formata a soma das despesas para o formato monetário brasileiro
+const formatExpenseSum = (sum) => sum.toFixed(2).replace('.', ',');
+
+// Atualiza o texto de um elemento HTML específico
+const updateElementText = (id, text) => {
+    const element = document.getElementById(id);
+    if (element) {
+        element.textContent = text;
+    }
+};
+
+// Altera a visibilidade de um elemento baseado em uma condição booleana
+const toggleElementVisibility = (id, condition) => {
+    const element = document.getElementById(id);
+    if (element) {
+        element.style.display = condition ? 'block' : 'none';
+    }
+};
+
+// Retorna uma mensagem apropriada baseada no status de despesa selecionado
+const getMessageForStatus = (status) => {
+    switch (status) {
+        case 'paga':
+            return 'Não há despesas pagas para exibir neste mês!';
+        case 'atrasada':
+            return 'Não há despesas atrasadas para exibir neste mês!';
+        case 'a_vencer':
+            return 'Não há despesas à vencer neste mês!';
+        default:
+            return ''; // Caso não se encaixe em nenhuma categoria, não retorna mensagem
+    }
+};
+
+// Aplica o filtro de status e mês nas despesas listadas
+const applyStatusFilter = (selectedStatus) => {
+    const selectedMonth = getSelectedMonth();
+    let expenseSum = 0;
+    const rows = document.querySelectorAll('.despesa-row');
+    let hasExpenseOfType = false;
+
+    // Processa cada linha de despesa para determinar quais exibir
+    rows.forEach(row => {
+        const status = row.getAttribute('data-status');
+        const month = row.getAttribute('data-mes');
+        const valueCell = row.cells[2].textContent;
+        const numericValue = parseFloat(valueCell.replace(',', '.'));
+
+        // Checa se o valor é numérico e filtra de acordo com o status e mês
+        if (!isNaN(numericValue)) {
+            if ((selectedStatus === '' || selectedStatus === status) && (selectedMonth === month)) {
+                row.style.display = 'table-row';
+                if (selectedStatus !== '') {
+                    expenseSum += numericValue;
+                }
+                hasExpenseOfType = true;
+            } else {
+                row.style.display = 'none';
+            }
+        } else {
+            console.warn(`Valor inválido encontrado: ${valueCell}`);
+        }
+    });
+
+    // Atualiza o total de despesas e a visibilidade dos elementos de interface relacionados
+    if (selectedStatus !== '') {
+        const formattedExpenseSum = formatExpenseSum(expenseSum);
+        updateElementText('totalSelect', formattedExpenseSum);
+        toggleElementVisibility('totalDespesasDiv', expenseSum > 0);
+    } else {
+        updateElementText('totalSelect', '');
+        toggleElementVisibility('totalDespesasDiv', false);
+    }
+
+    // Define e exibe uma mensagem baseada no status das despesas filtradas
+    const messageElement = document.getElementById('mensagemDespesas');
+    if (selectedStatus && selectedStatus !== '' && !hasExpenseOfType) {
+        const message = getMessageForStatus(selectedStatus);
+        messageElement.textContent = message;
+        messageElement.style.color = 'brown';
+        messageElement.style.display = 'block';
+    } else {
+        messageElement.textContent = '';
+        messageElement.style.display = 'none';
+    }
+};
+
+// Inicia o filtro com o status inicialmente selecionado
+applyStatusFilter(getSelectedStatus());
+
+
+    /* ܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀ ↥ SELETOR DE STATUS ↥ ܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀܀ */
 
 
