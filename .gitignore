@@ -9,4 +9,4 @@ gastos/bin/
 gastos/lib/
 gastos/lib64/
 gastos/pyvenv.cfg
-
+.env
