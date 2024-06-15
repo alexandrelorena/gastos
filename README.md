@@ -8,7 +8,7 @@
 ---
 - Univeridade Anhanguera Educacional
 - EAD (Ampli)
-- Plataforma Online para Controle de Gastos
+- Plataforma Online para Controle de Despesas
 ---
 
 ### 🎯 Objetivo do Projeto
