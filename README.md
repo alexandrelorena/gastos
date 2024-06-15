@@ -28,6 +28,45 @@
 
 ---
 
+## Configuração do Ambiente
+
+Este projeto usa variáveis de ambiente para configurar informações sensíveis. 
+Para rodar o projeto localmente, siga os passos abaixo:
+
+1. Crie um arquivo `.env` na raiz do projeto.
+2. Copie o conteúdo de `.env.example` para o arquivo `.env`.
+3. Substitua os valores de exemplo pelos seus próprios valores:
+
+```plaintext
+SECRET_KEY=your-secret-key
+DEBUG=True
+DATABASE_NAME=gastos
+DATABASE_USER=your-database-user
+DATABASE_PASSWORD=your-database-password
+DATABASE_HOST=localhost
+DATABASE_PORT=5432
+```
+---
+
+## Como rodar o Projeto
+
+Pré-requisitos:
+- Python 3.8+
+- Django==4.2.10
+- PostgreSQL
+
+Passos para Rodar:
+
+- Clone o repositório: `git clone https://github.com/seu-usuario/gastos.git`
+- Navegue até o diretório do projeto: `cd gastos`
+- Instale as dependências: `pip install -r requirements.txt`
+- Configure o banco de dados no arquivo `.env.`
+- Aplique as migrações: `python manage.py migrate`
+- Inicie o servidor de desenvolvimento: `python manage.py runserver`
+- O projeto estará disponível em `http://127.0.0.1:8000/`
+
+---
+
 <div>
   <a href="mailto:alexandre.lorena@gmail.com" style="text-decoration: none;">
     <img src="https://cdn.simpleicons.org/gmail" alt="Gmail" width="32" height="32"></a>&nbsp;&nbsp;
