@@ -15,7 +15,7 @@
 
  Este projeto visa criar uma plataforma acessível e educativa que ajude indivíduos e famílias a controlar seus gastos e melhorar sua educação financeira. 
  
- Ao desenvolver habilidades de gestão financeira, os usuários estarão mais bem preparados para enfrentar desafios econômicos e promover o desenvolvimento sustentável.
+ Ao desenvolver habilidades de gestão financeira, os usuários estarão melhor preparados para enfrentar desafios econômicos e promover o desenvolvimento sustentável.
 
 ---
 
