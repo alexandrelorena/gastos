@@ -28,7 +28,7 @@
 
 ---
 
-## Configuração do Ambiente
+## 🧐 Configuração do Ambiente
 
 Este projeto usa variáveis de ambiente para configurar informações sensíveis. 
 Para rodar o projeto localmente, siga os passos abaixo:
@@ -48,11 +48,11 @@ DATABASE_PORT=5432
 ```
 ---
 
-## Como rodar o Projeto
+## 📒 Como rodar o Projeto
 
 Pré-requisitos:
 - Python 3.8+
-- Django==4.2.10
+- Django 4.2
 - PostgreSQL
 
 Passos para Rodar:
@@ -60,10 +60,10 @@ Passos para Rodar:
 - Clone o repositório: `git clone https://github.com/seu-usuario/gastos.git`
 - Navegue até o diretório do projeto: `cd gastos`
 - Instale as dependências: `pip install -r requirements.txt`
-- Configure o banco de dados no arquivo `.env.`
+- Configure o banco de dados no arquivo: `.env.`
 - Aplique as migrações: `python manage.py migrate`
 - Inicie o servidor de desenvolvimento: `python manage.py runserver`
-- O projeto estará disponível em `http://127.0.0.1:8000/`
+- O projeto estará disponível em: `http://127.0.0.1:8000/`
 
 ---
 
