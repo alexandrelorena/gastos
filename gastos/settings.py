@@ -24,14 +24,20 @@ env = environ.Env(
     DEBUG=(bool, False)
 )
 
-# Leia o arquivo .env
-environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+# Determine qual arquivo .env carregar
+env_file = '.env'
+if os.getenv('DJANGO_ENV') == 'production':
+    env_file = '.env.production'
+else:
+    env_file = '.env.development'
 
-# ALLOWED_HOSTS = ['*']
+# Leia o arquivo .env apropriado
+environ.Env.read_env(os.path.join(BASE_DIR, env_file))
 
+# Configurações
 SECRET_KEY = env('SECRET_KEY')
-DEBUG = env('DEBUG')
-ALLOWED_HOSTS = ['*']
+DEBUG = env.bool('DEBUG')
+ALLOWED_HOSTS = ['*'] if DEBUG else ['your-production-domain.com']
 
 # Application definition
 
@@ -119,7 +125,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -130,7 +135,6 @@ TIME_ZONE = 'America/Sao_Paulo'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -157,9 +161,14 @@ LOGGING = {
     },
 }
 
-# Configurações do Celery Beat
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+# Configurações do Celery
+if env('DJANGO_ENV') == 'production':
+    CELERY_BROKER_URL = env('REDIS_URL')
+    CELERY_RESULT_BACKEND = env('REDIS_URL')
+else:
+    CELERY_BROKER_URL = 'redis://localhost:6379/0'
+    CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
@@ -172,6 +181,5 @@ CELERY_BEAT_SCHEDULE = {
         'schedule': crontab(hour='0', minute='0'),  # Configurar para a meia-noite todos os dias
     },
 }
-
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

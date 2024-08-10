@@ -11,10 +11,12 @@ click-plugins==1.1.1
 click-repl==0.3.0
 cron-descriptor==1.4.3
 dateparser==1.2.0
+dj-database-url==1.2.0
 Django==4.2.10
 django-bootstrap4==24.1
 django-celery-beat==2.5.0
 django-cors-headers==4.3.1
+django-environ==0.11.2
 django-stdimage==6.0.2
 django-timezone-field==6.1.0
 djangorestframework==3.14.0
