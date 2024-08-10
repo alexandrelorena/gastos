@@ -101,6 +101,7 @@ DATABASES = {
 
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:8000",
+    "https://gastos-production.up.railway.app",
     # Adicione outras origens permitidas, se necessário
 ]
 
