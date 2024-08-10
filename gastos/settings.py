@@ -29,7 +29,7 @@ env_file = '.env'
 if os.getenv('DJANGO_ENV') == 'production':
     env_file = '.env.production'
 else:
-    env_file = '.env.development'
+    env_file = '.env.development'a
 
 # Leia o arquivo .env apropriado
 environ.Env.read_env(os.path.join(BASE_DIR, env_file))
