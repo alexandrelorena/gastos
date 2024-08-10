@@ -1,0 +1,113 @@
+/* Reset e regras globais */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+button, .form-select {
+  border: none;
+  background-color: transparent;
+}
+
+/* Estilos personalizados */
+.custom-text {
+  color: #6C757D;
+  font-size: 16px;
+}
+
+.custom-width {
+  max-width: 10px;
+  margin: 0 auto;
+}
+
+.custom-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.text-secondary { color: red; }
+.text-info { color: #17A2B8; }
+.text-warning { color: #FFC107; }
+.text-danger { color: #DC3545; }
+.text-truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Tabelas e estados de linha */
+.table-striped-custom tbody tr:nth-of-type(even) { background-color: #FFFFFF; }
+.table-striped-custom tbody tr:nth-of-type(odd) { background-color: #F8F9FA; }
+.custom-table th {
+  text-align: center;
+  position: sticky;
+  top: 0;
+  background-color: #F8F9FA;
+}
+
+/* Modos de visualização */
+.light-mode, .dark-mode {
+  color: #343A40; /* Padrão para o modo claro */
+}
+.light-mode {
+  background-color: #fff;
+}
+.dark-mode {
+  background-color: #212529;
+  color: #fff;
+}
+.dark-mode select {
+  background-color: #212529;
+  color: white;
+}
+
+/* Estilos para ícones de toggle */
+#lightIcon, #darkIcon {
+  background-color: transparent;
+  vertical-align: middle;
+  margin-top: 0.1rem;
+  margin-left: 0.3rem;
+}
+#lightIcon { color: #ffae00; }
+#darkIcon { color: white; }
+
+/* Estilos específicos para navegadores */
+.browser-chrome .d-flex .text-xl,
+.browser-firefox .d-flex .text-xl,
+.browser-opera .d-flex .text-xl,
+.browser-edge .d-flex .text-xl {
+  margin-left: 3rem; /* Valor padrão */
+  margin-top: 0.3rem; /* Valor padrão */
+}
+.browser-firefox .d-flex .text-xl { margin-top: 0.1rem; }
+.browser-opera .d-flex .text-xl { margin-left: 5rem; }
+.browser-edge .d-flex .text-xl { margin-left: 2rem; margin-top: 0.5rem; }
+
+/* Links de navegação e modos */
+.custom-link, .nav-link {
+  background-color: transparent !important;
+  text-decoration: none;
+}
+.light-mode .nav-link {
+  color: #757C7D;
+  border-color: #DEE2E6;
+  background-color: #e00c0c;
+}
+.dark-mode .nav-link {
+  color: #FFFFFF;
+  border-color: #DEE2E6;
+}
+
+/* Hover styles */
+#mesButtons a:hover, #mesButtons li:hover {
+  color: black; /* Cor de texto no hover */
+  background-color: #17A2B8; /* Cor de fundo no hover */
+}
+
+/* Modais e rodapés */
+.modal-title, #totalDespesasDiv, .modal-message {
+  color: #6C757D;
+}
+.modal-message { text-align: center; }
+.footer-with-scroll { background-color: white; }
+.dark-mode #footer-text { color: white; }
