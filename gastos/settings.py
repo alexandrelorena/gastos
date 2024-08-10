@@ -37,7 +37,7 @@ environ.Env.read_env(os.path.join(BASE_DIR, env_file))
 # Configurações
 SECRET_KEY = env('SECRET_KEY')
 DEBUG = env.bool('DEBUG')
-ALLOWED_HOSTS = ['*'] if DEBUG else ['your-production-domain.com']
+ALLOWED_HOSTS = ['*'] if DEBUG else ['gastos-production.up.railway.app', 'www.gastos-production.up.railway.app']
 
 # Application definition
 
@@ -98,6 +98,10 @@ DATABASES = {
         'PORT': env('DATABASE_PORT'),
     }
 }
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://gastos-production.up.railway.app',
+]
 
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:8000",
