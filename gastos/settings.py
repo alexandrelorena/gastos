@@ -3,6 +3,7 @@ from pathlib import Path
 import environ
 from celery.schedules import crontab
 
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Inicialize o django-environ
@@ -10,17 +11,21 @@ env = environ.Env(
     DEBUG=(bool, False)
 )
 
-# Leia a variável de ambiente DJANGO_ENV diretamente
-django_env = os.getenv('DJANGO_ENV')
+# Detecta o ambiente baseado no hostname
+hostname = os.getenv('HOSTNAME', 'localhost')
+if 'railway' in hostname:
+    django_env = 'production'
+else:
+    django_env = 'development'
+
 print(f"DJANGO_ENV: {django_env}")
 
-# Determine qual arquivo .env carregar com base no DJANGO_ENV
+# Determine qual arquivo .env carregar com base no django_env detectado
 env_file = '.env.production' if django_env == 'production' else '.env.development'
 
 # Leia o arquivo .env apropriado
 environ.Env.read_env(os.path.join(BASE_DIR, env_file))
-print(f"DJANGO_ENV: {env('DJANGO_ENV')}")
-
+print(f"Variáveis carregadas do arquivo: {env_file}")
 # Configurações
 SECRET_KEY = env('SECRET_KEY')
 DEBUG = env.bool('DEBUG')
@@ -80,11 +85,11 @@ if django_env == 'production':
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': env('railway'),
-            'USER': env('postgres'),
-            'PASSWORD': env('GwFpphylhThYjKioFjstSTtpWpggJnQU'),
-            'HOST': env('viaduct.proxy.rlwy.net'),
-            'PORT': env('24187'),
+            'NAME': env('DATABASE_NAME'),
+            'USER': env('DATABASE_USER'),
+            'PASSWORD': env('DATABASE_PASSWORD'),
+            'HOST': env('DATABASE_HOST'),
+            'PORT': env('DATABASE_PORT'),
         }
     }
 else:
