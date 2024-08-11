@@ -4,6 +4,28 @@ import environ
 from celery.schedules import crontab
 
 
+# BASE_DIR = Path(__file__).resolve().parent.parent
+#
+# # Inicialize o django-environ
+# env = environ.Env(
+#     DEBUG=(bool, False)
+# )
+#
+# # Detecta o ambiente baseado no hostname
+# hostname = os.getenv('HOSTNAME', 'localhost')
+# if 'railway' in hostname:
+#     django_env = 'production'
+# else:
+#     django_env = 'development'
+#
+# print(f"DJANGO_ENV: {django_env}")
+#
+# # Determine qual arquivo .env carregar com base no django_env detectado
+# env_file = '.env.production' if django_env == 'production' else '.env.development'
+#
+# # Leia o arquivo .env apropriado
+# environ.Env.read_env(os.path.join(BASE_DIR, env_file))
+# print(f"Variáveis carregadas do arquivo: {env_file}")
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Inicialize o django-environ
@@ -11,21 +33,18 @@ env = environ.Env(
     DEBUG=(bool, False)
 )
 
-# Detecta o ambiente baseado no hostname
-hostname = os.getenv('HOSTNAME', 'localhost')
-if 'railway' in hostname:
-    django_env = 'production'
-else:
-    django_env = 'development'
-
+# Detecta o ambiente baseado na variável de ambiente DJANGO_ENV
+django_env = os.getenv('DJANGO_ENV', 'development')
 print(f"DJANGO_ENV: {django_env}")
 
 # Determine qual arquivo .env carregar com base no django_env detectado
 env_file = '.env.production' if django_env == 'production' else '.env.development'
 
 # Leia o arquivo .env apropriado
-environ.Env.read_env(os.path.join(BASE_DIR, env_file))
+env.read_env(os.path.join(BASE_DIR, env_file))
 print(f"Variáveis carregadas do arquivo: {env_file}")
+
+
 # Configurações
 SECRET_KEY = env('SECRET_KEY')
 DEBUG = env.bool('DEBUG')
