@@ -79,6 +79,8 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 ROOT_URLCONF = "gastos.urls"
 
 TEMPLATES = [
@@ -147,8 +149,12 @@ TIME_ZONE = 'America/Sao_Paulo'
 USE_I18N = True
 USE_TZ = True
 
-STATIC_URL = 'core/static/'
+STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
+
+# Adicione isso se seus arquivos estáticos estão localizados em 'core/static'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'core/static')]
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
